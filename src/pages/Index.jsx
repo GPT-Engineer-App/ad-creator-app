@@ -7,7 +7,7 @@ const Index = () => {
   const [commercial, setCommercial] = useState(null);
   const toast = useToast();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!description) {
       toast({
         title: "Error",
@@ -19,12 +19,26 @@ const Index = () => {
       return;
     }
 
-    setCommercial({
-      description,
-      imageSrc: "https://images.unsplash.com/photo-1496449903678-68ddcb189a24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxjb21tZXJjaWFsJTIwY29uY2VwdHxlbnwwfHx8fDE3MTAyNjI1OTB8MA&ixlib=rb-4.0.3&q=80&w=1080",
-    });
-
-    setDescription(""); // Clear the input after setting the commercial
+    try {
+      const response = await fetch("https://official-joke-api.appspot.com/jokes/programming/random");
+      if (!response.ok) {
+        throw new Error(`API call failed with status: ${response.status}`);
+      }
+      const jokeData = await response.json();
+      setCommercial({
+        description: jokeData[0].setup + " " + jokeData[0].punchline,
+        imageSrc: "https://images.unsplash.com/photo-1496449903678-68ddcb189a24?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1MDcxMzJ8MHwxfHNlYXJjaHwxfHxjb21tZXJjaWFsJTIwY29uY2VwdHxlbnwwfHx8fDE3MTAyNjI1OTB8MA&ixlib=rb-4.0.3&q=80&w=1080",
+      });
+      setDescription("");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error.message,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
