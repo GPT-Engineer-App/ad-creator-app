@@ -42,7 +42,7 @@ const Index = () => {
           <Input placeholder="e.g. Our new refreshing drink will cool you off on a hot day!" value={description} onChange={(e) => setDescription(e.target.value)} />
         </FormControl>
 
-        <Button colorScheme="blue" onClick={handleSubmit}>
+        <Button colorScheme="green" onClick={handleSubmit}>
           Create Commercial
         </Button>
 
