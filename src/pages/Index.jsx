@@ -31,7 +31,7 @@ const Index = () => {
     <Container maxW="container.md" py={10}>
       <VStack spacing={4} align="stretch">
         <Box textAlign="center">
-          <FaBroadcastTower size="3rem" />
+          <Text fontSize="3rem">📻</Text>
           <Text fontSize="2xl" fontWeight="bold" mt={2}>
             Commercial Creator
           </Text>
